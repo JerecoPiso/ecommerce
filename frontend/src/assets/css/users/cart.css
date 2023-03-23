@@ -1,0 +1,124 @@
+.btn-checkout{
+    border: none;
+    width: 100%;
+    border-radius: 0.2em;
+    padding: 0.5em 1em 0.5em 1em;
+    font-family: "Poppins";
+    background-color: #FBA63C;
+    color: rgb(255,255,255);
+}
+
+.cart-img{
+    width: 3em;
+    height: 3em;
+    /* box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 1px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px; */
+}
+
+.fw-6{
+    font-weight: 600;
+}
+.minus, .plus{
+    border: none;
+    padding: 0.2em 0.7em 0.2em 0.7em;
+    border-radius: 0.1em;
+    background-color: #FBA63C;
+    color: rgb(255,255,255);
+
+}
+.mt-n1{
+    margin-top: -1em;
+}
+.no-item{
+    font-family: "Poppins";
+    margin-top: 2em;
+    font-size: 1.2em;
+}
+.order-summary{
+    font-family: "Poppins";
+}
+.page-title{
+    font-family: "Poppins";
+    font-size: 1.5em;
+    margin-top: -0.5em;
+    margin-bottom: 0.2em;
+}
+.p-name{
+    margin-left: 2em;
+    font-size: 0.9em;
+    font-family: "Poppins";
+}
+.price{
+ 
+    font-size: 0.9em;
+    font-family: "Poppins";
+}
+.right{
+    float: right;
+}
+.qty{
+    width: 3em;
+    /* box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 1px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; */
+    border: none;
+    outline: none;
+    /* border-top: 1px solid rgba(0, 0, 0, 0.2); */
+    /* padding: 0.2em 0 0.2em 0; */
+    text-align: center;
+    border-radius: 0.1em;
+    height: 1.9em;
+    font-family: "Poppins";
+    color: #FBA63C;
+    /* margin: 0 0.2em 0 0.2em; */
+}
+.qty::-webkit-outer-spin-button,.qty::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+  
+    margin: 0;
+}
+.order-summary{
+    width: 15em;
+
+}
+.order-summary .total{
+    display: block;
+
+    height: 30px;
+    line-height: 30px;
+    font-size: 0.9em;
+    margin-bottom: 13px;
+    clear: both;
+}
+.order-summary .total span{
+    float: right;
+    color: #FBA63C;
+    font-size: 1em;
+}
+.remove-btn{
+    border: none;
+    background-color: rgb(255,0,0);
+    color: rgb(255,255,255);
+    border-radius: 0.2em;
+    padding: 0.2em 1em 0.2em 1em;
+}
+.selected-item{
+    height: 1em;
+    width: 1em;
+}
+.show-now{
+    text-decoration: none;
+    margin: auto auto 2.2em auto;
+    width: 12em;
+    background-color: rgb(0, 153, 230);
+    text-align: center;
+    font-family: "Poppins";
+    color: rgb(255,255,255);
+    font-size: 1.1em;
+    border-radius: 2em;
+    display: block;
+    padding: 0.5em;
+}
+td{
+    vertical-align: middle;
+}
+th{
+    font-family: "Poppins";
+}

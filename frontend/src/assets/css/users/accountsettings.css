@@ -1,0 +1,57 @@
+.btn-update{
+    border: none;
+    font-family: "Poppins";
+    padding: 0.5em 1em 0.5em 1em;
+    background-color: rgba(251,166,60,1);
+    color: rgb(255,255,255);
+    border-radius: 0.1em;
+}
+.dp{
+    position: relative;
+    border-radius: 0.3em;
+    margin-top: 0.5em;
+}
+.dp img{
+    width: 100%;    
+    min-height: 15em;
+    max-height: 15em;
+    /* object-fit: contain; */
+
+}
+.change-dp{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border: none;
+    padding: 0.5em;
+    font-family: "Poppins";
+    font-size: 0.9em;
+    background-color: rgba(0,0,0,0.4);
+    color: rgb(255,255,255);
+    
+}
+.form-title{
+    font-family: "Poppins";
+    font-weight: 500;
+    font-size: 1.2em;
+}
+input, select{
+    width: 100%;
+    outline: none;
+    border: none;
+    border-bottom: 1.5px solid rgba(251,166,60,1);
+    font-family: "Poppins";
+    margin-top: 0.3em;
+    font-size: 0.9em;
+}
+label{
+    font-family: "Poppins";
+    font-size: 0.9em;
+}
+.page-title{
+    font-family: "Poppins";
+    font-size: 1.5em;
+    margin-top: -0.5em;
+    margin-bottom: 0.2em;
+}
