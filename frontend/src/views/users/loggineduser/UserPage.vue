@@ -61,7 +61,9 @@ export default{
         if(!this.isLoggedIn){
             this.$router.push("/login");
         }
-        this.cartCount = this.$cookies.get('cart').length
+        if(this.$cookies.get('cart') != null){
+            this.cartCount = this.$cookies.get('cart').length
+        }
     },
 
     methods:{
