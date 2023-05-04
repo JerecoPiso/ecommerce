@@ -42,6 +42,7 @@ import { mapMutations } from "vuex";
         try {
                 await axios.post(this.url+"loginUser", this.userInfo).then(response => {
                     const { user, secret_token } = response.data
+                    console.log(user)
                     this.setUser(user);
                     this.setToken(secret_token);
                     this.$cookies.set('accessToken', response.data.secret_token)
@@ -58,7 +59,7 @@ import { mapMutations } from "vuex";
                 });
               
             } catch (err) {
-             
+                
                 Swal.fire({    
                     text:  'An error has occured',
                     icon: 'error',

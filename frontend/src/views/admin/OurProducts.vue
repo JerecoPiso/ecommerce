@@ -451,7 +451,7 @@ export default {
       }
     },
     prevPage() {
-      if (this.currentPage > 0) {
+      if (this.currentPage > 1) {
         this.currentPage--;
       }
     }

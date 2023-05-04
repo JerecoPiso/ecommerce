@@ -92,6 +92,8 @@ export default{
             data.append("token", this.$cookies.get("accessToken"))
             const response = await axios.post(this.url+"logout", data);
             if(!response.data.err){
+                this.setUser(null);
+                this.setToken(null)
                 this.$cookies.remove("accessToken")
                 this.$router.push("/login")
             }

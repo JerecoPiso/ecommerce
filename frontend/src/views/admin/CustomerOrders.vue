@@ -95,7 +95,7 @@ export default {
         return {
             products: null,
             classes: ['Pending', 'Approved', 'Delivered', 'Received'],
-            currentPage: 0,
+            currentPage: 1,
             totalPage: 10,
             view: false
         }
@@ -110,7 +110,7 @@ export default {
             }
         },
         prevPage() {
-            if (this.currentPage > 0) {
+            if (this.currentPage < 1) {
                 this.currentPage--;
             }
         }

@@ -17,7 +17,8 @@ export const loginUser = (req, res) => {
 
                     const user = {
                         email: req.body.email,
-                        username: results.username
+                        username: results.username,
+                        id: results.id
                     }
                     const secret_token = jwt.sign(user, '${process.env.JWT_KEY}');
                     const data = {
