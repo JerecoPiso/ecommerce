@@ -3,7 +3,7 @@
     <div class="box">
         <AdminSidenav></AdminSidenav>
         <div class="dashboard-body">
-            <router-view/>
+            <router-view />
 
         </div>
     </div>
@@ -11,9 +11,9 @@
 <script>
 import AdminHeader from '@/components/templates/AdminHeader.vue';
 import AdminSidenav from '@/components/templates/AdminSidenav.vue';
-export default{
+export default {
     name: 'DashBoard',
-    components:{
+    components: {
         AdminHeader,
         AdminSidenav,
     },

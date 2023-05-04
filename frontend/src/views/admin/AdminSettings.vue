@@ -1,10 +1,8 @@
 <template>
-
     <p class="page-title">Dashboard | Settings</p>
-
 </template>
 <script>
-export default{
+export default {
     name: 'AdminSettings',
 
 }
