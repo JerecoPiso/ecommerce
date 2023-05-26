@@ -3,20 +3,13 @@ import express from "express";
 // import function from controller
 //import { showProducts, showProductById, createProduct, updateProduct, deleteProduct } from "../controllers/Product.js";
 import { createUser, loginUser, checkIfAuth, logout, showUnVerifiedUsers, showVerifiedUsers } from "../controllers/Users.js";
-import { createProduct, showProducts, archiveProduct, archiveCategory, archiveBrand, showRecentProducts, showBrands,  addStock,
-         createCategory, createBrand , showCategory, showProductById, showProductByCategory, 
-         showProductByBrand, showPopularProduct, showSuggestedProductByCategory, showSuggestedProductByBrand, showOutOfStocks, updateBrand, updateCategory
-       } from "../controllers/Products.js";
+import { showProductsToDataTable,
+    createProduct, showProducts, archiveProduct, archiveCategory, archiveBrand, showRecentProducts, showBrands, addStock,
+    createCategory, createBrand, showCategory, showProductById, showProductByCategory,
+    showProductByBrand, showPopularProduct, showSuggestedProductByCategory, showSuggestedProductByBrand, showOutOfStocks, updateBrand, updateCategory
+} from "../controllers/Products.js";
 // init express router
 const router = express.Router();
-
-// Get All Product
-// router.get('/products', showProducts);
-// router.get('/products/:id', showProductById);
-// router.post('/products', createProduct);
-// router.put('/products/:id', updateProduct);
-// router.delete('/products/:id', deleteProduct);
-
 // Create
 router.post("/createUser", createUser);
 router.post("/admin/createProduct", createProduct);
@@ -38,6 +31,7 @@ router.get("/product/brand/:brand", showProductByBrand)
 router.post("/checkIfAuthenticated", checkIfAuth)
 router.get("/showSuggestedProductByCategory/:category", showSuggestedProductByCategory)
 router.get("/showSuggestedProductByBrand/:brand", showSuggestedProductByBrand)
+router.get("/admin/showProductsToDataTable", showProductsToDataTable)
 
 // Update
 router.put("/admin/archiveProduct/:id", archiveProduct);

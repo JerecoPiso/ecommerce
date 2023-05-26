@@ -26,7 +26,7 @@ import PagenotFound from '@/components/templates/PagenotFound.vue'
 const routes = [
   { 
     name: 'LoginUser',
-    path: '/login',
+    path: '/login/:redirect',
     component: LoginUser
   },
   {

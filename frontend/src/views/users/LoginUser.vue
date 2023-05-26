@@ -1,92 +1,84 @@
 <template>
     <div class="form-body">
-            <form class="login-form" @submit.prevent="login()">
-                <label for="">Email</label>
-                <input type="email" v-model="userInfo.email" required>
-                <label for="" class="mt-4">Password</label>
-                <input type="password" v-model="userInfo.password" required>
-                <button type="submit" class="btnLogin">Login</button>
-                <p class="text-center mt-4">Don't have an account? <router-link :to="{ name: 'RegisterUser' }" 
-                    >Sign Up</router-link
-                  > </p>
-            </form>
+        <form class="login-form" @submit.prevent="login()">
+            <label for="">Email</label>
+            <input type="email" v-model="userInfo.email" required>
+            <label for="" class="mt-4">Password</label>
+            <input type="password" v-model="userInfo.password" required>
+            <button type="submit" class="btnLogin">Login</button>
+            <p class="text-center mt-4">Don't have an account? <router-link :to="{ name: 'RegisterUser' }">Sign Up</router-link> </p>
+        </form>
     </div>
 </template>
 <script>
 import axios from 'axios';
 import Swal from "sweetalert2";
 import { mapMutations } from "vuex";
- export default{
+export default {
     name: "LoginUser",
-
-    data(){
-        return{
-            userInfo: {email: '', password: ''},
+    data() {
+        return {
+            userInfo: { email: '', password: '' },
             errmsg: '',
             success: '',
             url: ""
         }
     },
-    created(){
+    created() {
         document.title = "Techworld | Login"
         this.url = axios.defaults.baseURL
-        if(this.$cookies.get('accessToken') == null){
-            this.$router.push("/login");
-        }else{
+        if (this.$cookies.get('accessToken') == null) {
+            this.$router.push("/login/" + this.$route.params.redirect);
+        } else {
             this.$router.push("/user/");
         }
     },
-    methods:{
+    methods: {
         ...mapMutations(["setUser", "setToken"]),
-        async login(){
-        try {
-                await axios.post(this.url+"loginUser", this.userInfo).then(response => {
+        async login() {
+            try {
+                await axios.post(this.url + "loginUser", this.userInfo).then(response => {
                     const { user, secret_token } = response.data
                     console.log(user)
                     this.setUser(user);
                     this.setToken(secret_token);
                     this.$cookies.set('accessToken', response.data.secret_token)
-                    if(response.data.err == true){
+                    if (response.data.err == true) {
                         Swal.fire({
                             text: response.data.message,
                             icon: response.data.responseType,
                             confirmButtonText: 'OK'
                         })
-                    }else{
-
+                    } else {
                         this.$router.push("/user");
                     }
                 });
-              
             } catch (err) {
-                
-                Swal.fire({    
-                    text:  'An error has occured',
+                Swal.fire({
+                    text: 'An error has occured',
                     icon: 'error',
                     confirmButtonText: 'OK'
                 })
             }
-      },
+        },
     }
- }
+}
 </script>
 <style scoped>
-    p a{
+    p a {
         text-decoration: none;
     }
-    p a:hover{
-        color: rgba(251,166,60,1);
+    p a:hover {
+        color: rgba(251, 166, 60, 1);
     }
-
-    input{
+    input {
         width: 100%;
         border: none;
         border-bottom: 1px solid rgba(60, 64, 67, 0.3);
         height: 35px;
-        
     }
-    input:focus{
+    input:focus {
         outline: none;
-        border-bottom: 2px solid rgba(251,166,60,1);
+        border-bottom: 2px solid rgba(251, 166, 60, 1);
     }
 </style>

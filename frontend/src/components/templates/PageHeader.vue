@@ -2,7 +2,7 @@
     <div class="header">
         <p class="logo">techworld.</p>
         <p class="login-reg-cart"> 
-            <router-link class="loginsignup-link"  v-if="!isLoggedIn" :to="{ name: 'LoginUser' }">  Login</router-link> <span v-if="!isLoggedIn">| </span>  
+            <router-link class="loginsignup-link"  v-if="!isLoggedIn" :to="{ name: 'LoginUser', params: { redirect: 'user' } }">  Login</router-link> <span v-if="!isLoggedIn">| </span>  
             <router-link class="loginsignup-link"  v-if="!isLoggedIn" :to="{ name: 'RegisterUser' }">Register</router-link>
             <router-link class="cart-link" v-if="isLoggedIn"  :to="{ name: 'UserPage' }"><i class="fa-solid fa-user"></i></router-link> <span v-if="isLoggedIn"> | </span>  
             <a href="javascript:void(0)" @click="logout()" v-if="isLoggedIn" class="btn-logout "><i class="fa-solid fa-right-from-bracket"></i> </a>
@@ -16,8 +16,7 @@
                 <input type="text" placeholder="Search here . . ."> <button><i class="fa-solid fa-magnifying-glass ps-2 "></i></button>
             </div>
          </div>
-    </Transition>
-
+     </Transition>
      <nav class="links">
          <ul class="main-nav"> 
              <li> <router-link :to="{name: 'MainContent'}">Home</router-link> </li>
@@ -53,7 +52,6 @@ export default{
             category: [],
             brands: [],
             url: "",
-          
         }
     },
     computed: {
@@ -80,11 +78,9 @@ export default{
             const response =  await axios.get(this.url+"admin/showBrands");
             this.brands = []
             this.brands = response.data
-            // console.log(this.brands)
           }catch(err){
             console.log(err)
           }
-          
         },
         async getCategory(){
           try{

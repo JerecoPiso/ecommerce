@@ -12,13 +12,11 @@
                             </li>
                             <li><i class="fa-solid fa-bag-shopping"></i>
                                 <router-link  :to="{ name: 'Orders' }">Orders<span class="badge">{{cartCount}}</span></router-link>
-                                <!-- <a href="">Orders<span class="badge">1</span></a> -->
                             </li>
                             <li><i class="fa-solid fa-cart-shopping"></i> 
                                 <router-link  :to="{ name: 'Cart' }">Cart<span class="badge">{{cartCount}}</span></router-link>
                             </li>
                             <li><i class="fa-solid fa-gear"></i>
-                                <!-- <a href="">Account Settings</a> -->
                                 <router-link  :to="{ name: 'Account' }">Account Settings</router-link>
                             </li>
                             <li><i class="fa-solid fa-right-from-bracket"></i><a type="button" @click="logout()" class="btn-logout">Logout</a></li>
@@ -79,7 +77,6 @@ export default{
                         this.setUser(user);
                         this.setToken(secret_token)
                         this.name = this.$store.state.user.username
-
                         this.$cookies.set('accessToken', response.data.secret_token)
                     }
                 }
@@ -95,7 +92,7 @@ export default{
                 this.setUser(null);
                 this.setToken(null)
                 this.$cookies.remove("accessToken")
-                this.$router.push("/login")
+                this.$router.push("/login/user")
             }
         },   
     }

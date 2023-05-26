@@ -90,6 +90,7 @@ export default {
         }
     },
     created() {
+        document.title = "Home"
         this.url = axios.defaults.baseURL
         this.getPopularProducts()
         this.getCountsForCard()

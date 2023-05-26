@@ -11,7 +11,7 @@
                 <label for="" class="mt-4">Confirm Password</label>
                 <input type="password" v-model="confirmPass" required>
                 <button type="submit" class="btnLogin">Sign Up</button>
-                <p class="text-center mt-4">Already have an account? <router-link :to="{ name: 'LoginUser' }" >Login</router-link> </p>
+                <p class="text-center mt-4">Already have an account? <router-link :to="{ name: 'LoginUser', params: { redirect: 'user' } }" >Login</router-link> </p>
             </form>
     </div>
 </template>

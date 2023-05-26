@@ -43,12 +43,28 @@
   </div>
   <p class="page-title">Dashboard | Products</p>
   <div class="table-products">
-    <button type="button" data-bs-toggle="modal" data-bs-target="#myModal" class="add-btn"> <i
+    <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#myModal" class="add-btn"> <i
         class="fa-solid fa-plus"></i> Add Product</button>
 
-    <input type="text" placeholder="Search . . ." name="" id="search-filter">
-    <div class="tbl-max-height">
-      <table class="table table-hover table-responsive table-bordered">
+    <input type="text" placeholder="Search . . ." name="" id="search-filter"> -->
+    <div class="tbl-max-height" style="padding-right: 10px;">
+      <DataTable ajax="http://localhost:5000/admin/showProductsToDataTable"  ref="table" class="display" :options="{
+        select: true,
+        serverSide: true,
+        processing: true,
+        searching: true,
+        stateSave: true
+      }">
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Stocks</th>
+            <th>Category</th>
+            <th>Brand</th>
+          </tr>
+        </thead>
+      </DataTable>
+      <!-- <table class="table table-hover table-responsive table-bordered">
         <thead>
           <tr>
             <th>Image </th>
@@ -75,10 +91,10 @@
             </td>
           </tr>
         </tbody>
-      </table>
+      </table> -->
     </div>
-    <TablePagination :current-page="currentPage" :total-page="totalPage" @next="nextPage()" @prev="prevPage()">
-    </TablePagination>
+    <!-- <TablePagination :current-page="currentPage" :total-page="totalPage" @next="nextPage()" @prev="prevPage()">
+    </TablePagination> -->
   </div>
   <!-- .table-products -->
   <div class="row">
@@ -127,7 +143,7 @@
             <tbody>
               <tr v-for="b, index in brands" :key="b.id">
                 <td class="brand-category">{{ b.brand }}</td>
-                <td class="action-td" style="width: 40%;">
+                <td class="action-td" >
                   <button class="action-btn btn-edit" @click="updateBrand(b.id, b.brand, index)"><i
                       class="fa-solid fa-pen-to-square"></i> </button> &ThinSpace;
                   <button class="action-btn btn-archive " @click="archiveBrand(b.id, index)"><i
@@ -139,18 +155,45 @@
         </div>
       </div>
     </div>
+    <!-- <div class="col-xl-12">
+      <div class="tables p-4">
+        <DataTable ajax="http://localhost:5000/admin/showProductsToDataTable" ref="table" class="display" :options="{
+          select: true,
+          serverSide: true,
+          processing: true,
+          searching: true,
+          stateSave: true
+        }">
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Stocks</th>
+              <th>Category</th>
+              <th>Brand</th>
+            </tr>
+          </thead>
+        </DataTable>
+      </div>
+
+    </div> -->
   </div>
 </template>
 <script>
 
-import TablePagination from '@/components/TablePagination.vue';
+// import TablePagination from '@/components/TablePagination.vue';
 import axios from 'axios';
+import DataTable from 'datatables.net-vue3';
+import 'datatables.net-select';
+import 'datatables.net-responsive';
+import DataTablesCore from 'datatables.net';
 import Swal from 'sweetalert2';
+DataTable.use(DataTablesCore);
+
 export default {
   name: "OurProducts",
   components: {
-
-    TablePagination
+    DataTable,
+    // TablePagination
   },
   data() {
     return {
@@ -170,6 +213,34 @@ export default {
       outofstock: [],
       currentPage: 1,
       totalPage: 8,
+      datas: [
+        [1, 2],
+        [3, 4],
+        [1, 2],
+        [3, 4],
+        [1, 2],
+        [3, 4],
+        [1, 2],
+        [3, 4],
+        [1, 2],
+        [3, 4],
+        [1, 2],
+        [3, 4],
+        [1, 2],
+        [3, 4],
+        [1, 2],
+        [3, 4],
+        [1, 2],
+        [3, 4],
+        [1, 2],
+        [3, 4],
+        [1, 2],
+        [3, 4],
+        [1, 2],
+        [3, 4],
+        [1, 2],
+        [3, 4],
+      ]
     }
   },
   created() {
@@ -458,4 +529,7 @@ export default {
   }
 }
 </script>
+<style scoped>
+@import 'datatables.net-dt'
+</style>
 <style scoped src="@/assets/css/admin/index.css"></style>

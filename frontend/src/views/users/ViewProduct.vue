@@ -62,7 +62,7 @@
 import ProductCard from '@/components/ProductCard.vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 export default {
     name: "ViewProduct",
     components: {
@@ -100,7 +100,17 @@ export default {
         }
     },
     methods: {
+        ...mapMutations(["setCartitem"]),
         AddToCart() {
+            // var orderInfo = {
+            //             product_name: this.product_name,
+            //             image: this.image,
+            //             price: this.price,
+            //             qty: this.quantity,
+            //             id: this.$route.params.id,
+            //             stocks: this.stocks
+            //         }
+            //         this.setCartitem(orderInfo);
             if (this.isLoggedIn) {
                 // alert(this.$route.params.id)
                 if (this.quantity == 0) {
@@ -120,7 +130,7 @@ export default {
                         id: this.$route.params.id,
                         stocks: this.stocks
                     }]
-
+                    this.setCartitem(orderInfo);
                     if (this.$cookies.get('cart') != null) {
                         orderInfo = orderInfo.concat(this.$cookies.get('cart'))
                     }
@@ -132,7 +142,7 @@ export default {
                     })
                 }
             }else{
-                this.$router.push("/login")
+                this.$router.push("/login/cart")
             }
 
         },
