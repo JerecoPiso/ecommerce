@@ -52,7 +52,7 @@ import Swal from "sweetalert2";
                     icon: 'success',
                     confirmButtonText: 'OK'
                 })
-                this.$router.push("/login");
+                this.$router.push("/login/user");
             }
 
         } catch (err) {

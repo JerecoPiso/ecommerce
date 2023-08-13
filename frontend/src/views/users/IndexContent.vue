@@ -9,8 +9,8 @@
             <div class="carousel-item active">
                 <img src="/images/Apple-Event-1.png" alt="Los Angeles" class="d-block">
                 <div class="carousel-caption">
-                    <h3>Los Angeles</h3>
-                    <p>We had such a great time in LA!</p>
+                    <h3>Apple Event</h3>
+                    <p>Join Us Now!</p>
                 </div>
             </div>
             <div class="carousel-item">
