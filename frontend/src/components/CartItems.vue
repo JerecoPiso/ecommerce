@@ -91,24 +91,7 @@ export default{
                 }).then((result) => {
                 if (result.isConfirmed) {
                     this.$emit('remove')
-                    this.$cookies.get('cart').forEach(el => {
-                    var orders = {};
-                    if ((this.id != el.id)) {
-                            orders = {
-                                product_name: el.product_name,
-                                image: el.image,
-                                price: el.price,
-                                qty: this.totalQty,
-                                id: el.id,
-                                stocks: el.stocks
-                        }
-                        this.products.push(orders)
-                    }
-                    this.$cookies.set('cart', JSON.stringify(this.products))
-                  
-                    
-                    });
-                    Swal.fire('Saved!', '', 'success')
+                    Swal.fire('Item removed successfully', '', 'success')
                 } else if (result.isDismissed) {
                     Swal.fire('Changes are not saved', '', 'info')
                 }
@@ -119,7 +102,6 @@ export default{
             this.products = []
             this.$cookies.get('cart').forEach(el => {
                var orders = {};
-            //    console.log(this.id)
                if (this.id == el.id) {
                     orders = {
                         product_name: el.product_name,
@@ -139,7 +121,6 @@ export default{
                         stocks: el.stocks
                 }
                }
-
                this.products.push(orders)
             });
             this.$cookies.set('cart', JSON.stringify(this.products))
