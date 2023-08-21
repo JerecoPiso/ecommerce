@@ -1,10 +1,27 @@
 // Import function from User Model
-import { insertUser, getUser, insertPAT, getAuthenticated, logoutUser, getUsers } from "../models/userModel.js";
+import { insertUser, getUser, insertPAT, getAuthenticated, logoutUser, getUsers, addNewToCart, getCartByUserId } from "../models/userModel.js";
 import passwordHash from "password-hash";
 import jwt from 'jsonwebtoken'
 
+export const addToCart = (req, res) => {
+    addNewToCart(req.body, (err, results) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.json(results);
+        }
+    })
+}
+export const getCartByUser = (req, res) => {
+    getCartByUserId(req.params.userid, (err, results) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.json(results);
+        }
+    })
+}
 export const loginUser = (req, res) => {
-
     getUser(req.body.email, (err, results) => {
         if (err) {
             res.send(err);
@@ -60,9 +77,7 @@ export const createUser = (req, res) => {
         }
     });
 }
-
 export const checkIfAuth = (req, res) => {
-    // console.log(req.body.token)
     getAuthenticated(req.body.token, (err, results) => {
         if (err) {
             res.json({ loggin: false })
@@ -70,7 +85,8 @@ export const checkIfAuth = (req, res) => {
             if (results !== undefined) {
                 const user = {
                     email: results.email,
-                    username: results.username
+                    username: results.username,
+                    id: results.userid
                 }
                 const secret_token = results.token
 

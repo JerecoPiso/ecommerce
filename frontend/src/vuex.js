@@ -25,6 +25,9 @@ const store = createStore({
         isLoggedIn(state) {
             return !!state.token;
         },
+        userId(state){
+            return state.user
+        }
     },
     plugins: [createPersistedState()],
 })

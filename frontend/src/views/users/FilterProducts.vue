@@ -1,7 +1,7 @@
 <template>
-    <div class="product-with-label">
+ <div class="product-with-label">
         <p class="p-labels mt-4 mb-2">Products</p>
-        <FiltersProduct @filter="FilterProducts"></FiltersProduct>
+        <FiltersProducts @filter="FilterProducts"></FiltersProducts>
         <div class="row clear">
             <div class="row">
                 <ProductCard v-for="product in products" :product-id="product.id" :source="'/images/' + product.img_name"
@@ -12,29 +12,33 @@
     </div>
 </template>
 <script>
-import FiltersProduct from "@/components/FiltersProduct.vue";
-import ProductCard from '@/components/ProductCard.vue';
 import axios from 'axios';
-export default {
-    name: "AllProducts",
-    components: {
-        FiltersProduct,
+import FiltersProducts from "@/components/FiltersProduct.vue";
+import ProductCard from '@/components/ProductCard.vue';
+export default{
+    name: "FilterProducts",
+    components:{
+        FiltersProducts,
         ProductCard
     },
-    created() {
+    data(){
+        return{
+            products: [],
+            url: ''
+        }
+    },
+    created(){
         document.title = "Techworld | Products"
         this.GetProducts()
         this.url = axios.defaults.baseURL
+        // this.$watch(
+        //         () => this.$route.params,
+        //         () => {
+        //             this.FilterProducts(this.$route.params.product)
+        //         }
+        // )
     },
-    data() {
-        return {
-            products: [],
-            url: '',
-            minimunPrice: '',
-            maximumPrice: ''
-        }
-    },
-    methods: {
+    methods:{
         async GetProducts() {
             try {
                 const response = await axios.get(this.url + "admin/showProducts");
@@ -44,10 +48,12 @@ export default {
             }
         },
         FilterProducts(filterBy, value) {
-            this.$router.push(`/products/all/${filterBy}/${value}`)
+           // alert(filterBy+"--"+value)
+            this.$router.push(`/products/brand_${this.$route.params.product}/${filterBy}/${value}`)
         }
     }
 }
+
 </script>
 <style scoped src="@/assets/css/users/allproducts.css"></style>
 <style scoped src="@/assets/css/users/index.css"></style>

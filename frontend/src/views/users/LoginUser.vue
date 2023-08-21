@@ -39,18 +39,22 @@ export default {
             try {
                 await axios.post(this.url + "loginUser", this.userInfo).then(response => {
                     const { user, secret_token } = response.data
-                    console.log(user)
                     this.setUser(user);
                     this.setToken(secret_token);
                     this.$cookies.set('accessToken', response.data.secret_token)
-                    if (response.data.err == true) {
+                    if (response.data.err != true) {
+                        if(this.$route.params.redirect != "cart"){
+                            this.$router.push("/user");
+                        }else{
+                            window.history.back();
+                        }
+
+                    } else {
                         Swal.fire({
                             text: response.data.message,
                             icon: response.data.responseType,
                             confirmButtonText: 'OK'
                         })
-                    } else {
-                        this.$router.push("/user");
                     }
                 });
             } catch (err) {

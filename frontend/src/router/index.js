@@ -13,7 +13,7 @@ import AllProducts from '@/views/users/AllProducts.vue'
 import IndexPage from '@/views/users/IndexPage.vue'
 import IndexContent from '@/views/users/IndexContent.vue'
 import LoginUser from '@/views/users/LoginUser.vue'
-// import MinMax from '@/views/users/ProductsMinmax.vue'
+import FilterProducts from '@/views/users/FilterProducts.vue';
 import MyCart from '@/views/users/loggineduser/MyCart.vue'
 import MyOrders from '@/views/users/loggineduser/MyOrders.vue'
 import ProductCategory from '@/views/users/ProductCategory.vue'
@@ -24,7 +24,7 @@ import ViewProduct from '@/views/users/ViewProduct.vue'
 
 import PagenotFound from '@/components/templates/PagenotFound.vue'
 const routes = [
-  { 
+  {
     name: 'LoginUser',
     path: '/login/:redirect',
     component: LoginUser
@@ -39,11 +39,12 @@ const routes = [
     path: '/',
     component: IndexPage,
     children: [
-      { name: 'MainContent', path: '', component: IndexContent},
-      { name: 'AllProducts', path: 'products', component: AllProducts},
-      { name: 'Product', path: 'product/:id', component: ViewProduct},
-      { name: 'ProductCategory', path: 'product/category/:category', component: ProductCategory},
-      { name: 'ProductBrand', path: 'product/brand/:brand', component: ProductBrand}
+      { name: 'MainContent', path: '', component: IndexContent },
+      { name: 'AllProducts', path: 'products', component: AllProducts },
+      { name: 'Product', path: 'product/:id', component: ViewProduct },
+      { name: 'ProductCategory', path: 'product/category/:category', component: ProductCategory },
+      { name: 'ProductBrand', path: 'product/brand/:brand', component: ProductBrand },
+      { name: 'FilterProducts', path: 'products/:product/:filterby/:value', component: FilterProducts }
     ]
   },
   {
@@ -51,12 +52,12 @@ const routes = [
     path: '/admin/',
     component: DashBoard,
     children: [
-      { name: 'Main', path: '', component: MainPage  },
-      { name: 'OurProducts', path: 'products', component: OurProducts  },
-      { name: 'CustOrders', path: 'orders', component: CustomerOrders  },
-      { name: 'OurCustomers', path: 'customers', component: OurCustomers  },
-      { name: 'NewsEvents', path: 'newsandevents', component: NewsEvents  },
-      { name: 'AdminSettings', path: 'settings', component: AdminSettings  },
+      { name: 'Main', path: '', component: MainPage },
+      { name: 'OurProducts', path: 'products', component: OurProducts },
+      { name: 'CustOrders', path: 'orders', component: CustomerOrders },
+      { name: 'OurCustomers', path: 'customers', component: OurCustomers },
+      { name: 'NewsEvents', path: 'newsandevents', component: NewsEvents },
+      { name: 'AdminSettings', path: 'settings', component: AdminSettings },
     ],
   },
   {
@@ -64,9 +65,9 @@ const routes = [
     path: '/user/',
     component: UserPage,
     children: [
-      { name: 'Cart', path: 'cart', component: MyCart  },
-      { name: 'Account', path: 'accountsettings', component: AccountSettings  },
-      { name: 'Orders', path: 'myorders', component: MyOrders  },
+      { name: 'Cart', path: 'cart', component: MyCart },
+      { name: 'Account', path: 'accountsettings', component: AccountSettings },
+      { name: 'Orders', path: 'myorders', component: MyOrders },
     ],
   },
   //404 not found page

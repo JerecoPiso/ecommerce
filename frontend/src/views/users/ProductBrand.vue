@@ -1,5 +1,6 @@
 <template>
     <p class="p-labels mt-1">Brand: <span class="searched"> {{$route.params.brand}}</span> </p>
+    <FiltersProduct style="margin-top: 1.5em;" @filter="FilterProducts"></FiltersProduct>
     <div class="row">
         <ProductCard v-for="brand in brands" :product-id="brand.id" :source="'/images/'+brand.img_name" :key="brand.id" :product-name="brand.product_name" :price="brand.price.toLocaleString('en-US')" :sold="brand.sold.toString()"></ProductCard>
     </div>
@@ -12,10 +13,12 @@
 </template>
 <script>
 import axios from 'axios';
+import FiltersProduct from "@/components/FiltersProduct.vue";
 import ProductCard from '@/components/ProductCard.vue';
 export default{
     name: "ProductBrand",
     components:{
+        FiltersProduct,
         ProductCard
     },  
     created(){
@@ -51,6 +54,9 @@ export default{
                 // console.log(response.data)
                 this.suggestedProductBrand = response.data
             }
+        },
+        FilterProducts(filterBy, value) {
+            this.$router.push(`/products/brand_${this.$route.params.brand}/${filterBy}/${value}`)
         }
     }
 }

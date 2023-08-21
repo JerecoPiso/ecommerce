@@ -62,7 +62,7 @@
 import ProductCard from '@/components/ProductCard.vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex';
 export default {
     name: "ViewProduct",
     components: {
@@ -82,7 +82,7 @@ export default {
         this.url = axios.defaults.baseURL
     },
     computed: {
-        ...mapGetters(["isLoggedIn"])
+        ...mapGetters(["isLoggedIn", "userId"])
     },
     data() {
         return {
@@ -101,18 +101,8 @@ export default {
     },
     methods: {
         ...mapMutations(["setCartitem"]),
-        AddToCart() {
-            // var orderInfo = {
-            //             product_name: this.product_name,
-            //             image: this.image,
-            //             price: this.price,
-            //             qty: this.quantity,
-            //             id: this.$route.params.id,
-            //             stocks: this.stocks
-            //         }
-            //         this.setCartitem(orderInfo);
+        async AddToCart() {
             if (this.isLoggedIn) {
-                // alert(this.$route.params.id)
                 if (this.quantity == 0) {
                     Swal.fire({
                         icon: 'error',
@@ -121,30 +111,31 @@ export default {
                     })
                 }
                 else {
-
-                    var orderInfo = [{
-                        product_name: this.product_name,
-                        image: this.image,
-                        price: this.price,
-                        qty: this.quantity,
-                        id: this.$route.params.id,
-                        stocks: this.stocks
-                    }]
-                    this.setCartitem(orderInfo);
-                    if (this.$cookies.get('cart') != null) {
-                        orderInfo = orderInfo.concat(this.$cookies.get('cart'))
-                    }
-                    this.$cookies.set('cart', JSON.stringify(orderInfo))
-                    Swal.fire({
-                        icon: 'success',
-                        title: '',
-                        text: 'Item added to cart'
+                    let data = new FormData()
+                    data.append("product_id", this.$route.params.id);
+                    data.append("quantity", this.quantity);
+                    data.append("user_id", this.userId.id)
+                    await axios.post(this.url + "addToCart", data).then(response => {
+                        if (response.statusText === "OK") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '',
+                                text: 'Item added to cart'
+                            })
+                        }else{
+                            Swal.fire({
+                                icon: 'error',
+                                title: '',
+                                text: 'An error has occured'
+                            })
+                        }
+                    }).catch(err => {
+                        console.log(err)
                     })
                 }
-            }else{
+            } else {
                 this.$router.push("/login/cart")
             }
-
         },
         async getProductById() {
             const response = await axios.get(`${this.url}product/${this.$route.params.id}`);

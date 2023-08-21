@@ -2,7 +2,7 @@
 import express from "express";
 // import function from controller
 //import { showProducts, showProductById, createProduct, updateProduct, deleteProduct } from "../controllers/Product.js";
-import { createUser, loginUser, checkIfAuth, logout, showUnVerifiedUsers, showVerifiedUsers } from "../controllers/Users.js";
+import { createUser, loginUser, checkIfAuth, logout, showUnVerifiedUsers, showVerifiedUsers, addToCart, getCartByUser } from "../controllers/Users.js";
 import { showProductsToDataTable,
     createProduct, showProducts, archiveProduct, archiveCategory, archiveBrand, showRecentProducts, showBrands, addStock,
     createCategory, createBrand, showCategory, showProductById, showProductByCategory,
@@ -15,7 +15,10 @@ router.post("/createUser", createUser);
 router.post("/admin/createProduct", createProduct);
 router.post("/admin/createCategory", createCategory);
 router.post("/admin/createBrand", createBrand);
+router.post("/addToCart", addToCart);
+router.post("/getCartByUser", addToCart);
 router.post("/logout", logout);
+
 // Read
 router.get("/admin/showProducts", showProducts);
 router.get("/admin/showCategory", showCategory);
@@ -32,6 +35,7 @@ router.post("/checkIfAuthenticated", checkIfAuth)
 router.get("/showSuggestedProductByCategory/:category", showSuggestedProductByCategory)
 router.get("/showSuggestedProductByBrand/:brand", showSuggestedProductByBrand)
 router.get("/admin/showProductsToDataTable", showProductsToDataTable)
+router.get("/getCartByUser/:userid", getCartByUser);
 
 // Update
 router.put("/admin/archiveProduct/:id", archiveProduct);

@@ -70,7 +70,7 @@ export default{
             const response = await axios.post(this.url+"logout", data);
             if(!response.data.err){
                 this.$cookies.remove("accessToken")
-                this.$router.push("/login")
+                this.$router.push("/login/user")
             }
         },        
         async getBrands(){

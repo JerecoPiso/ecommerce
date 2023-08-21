@@ -33,6 +33,7 @@
     </div>
 </template>
 <script>
+import { getMyCart } from "@/apis/api.js";
 import axios from 'axios';
 import { mapGetters, mapMutations} from 'vuex'
 export default{
@@ -41,29 +42,28 @@ export default{
        // AdminCards
     },
     computed: {
-      ...mapGetters(["isLoggedIn"])
-       
+      ...mapGetters(["isLoggedIn", "userId"])
     },
     data(){
         return{
            url :'',
            cartCount: 0,
            name: ''
-           
         }
     },
     created(){
         this.url = axios.defaults.baseURL
-        // this.$store.state.token = this.$cookies.get("accessToken")
         this.checkIfAuthenticated()
         if(!this.isLoggedIn){
             this.$router.push("/login");
         }
-        if(this.$cookies.get('cart') != null){
-            this.cartCount = this.$cookies.get('cart').length
-        }
     },
-
+    mounted(){
+        (async () => {
+            const resp = await getMyCart(this.userId.id);
+            this.cartCount = resp.length
+        })()
+    },
     methods:{
         ...mapMutations(["setUser", "setToken"]),
         async checkIfAuthenticated(){
