@@ -1,5 +1,64 @@
 import db from "../config/database.js";
 
+export const filteredProducts = (params, result) => {
+    // console.log(params)
+    var queryString = "";
+    var condition = "";
+    var paramsValue = [];
+    if(params.product.includes("category")){
+        const product = params.product.split("_");
+        queryString = "SELECT products.* FROM products LEFT JOIN category ON products.category_id = category.id WHERE category.category = ? AND products.archive <> ? ";
+        if(params.filterby === "pricerange"){
+            const pricerange = params.value.split("-");
+            paramsValue = [product[1], 1, parseFloat(pricerange[0]), parseFloat(pricerange[1])];
+            condition = "AND  products.price BETWEEN ? AND ?;";
+        }else if(params.filter === "sold"){
+            paramsValue = [product[1], 1];
+            condition = `ORDER BY products.sold ${params.value.toUpperCase()};`;
+        }else{
+            paramsValue = [product[1], 1];
+            condition = `ORDER BY products.price ${params.value.toUpperCase()};`;
+        }
+    }else if(params.product.includes("brand")){
+        const product = params.product.split("_");
+        queryString = "SELECT products.*  FROM products LEFT JOIN brand ON products.brand_id = brand.id WHERE brand.brand = ? AND products.archive <> ? ";
+        if(params.filterby === "pricerange"){
+            const pricerange = params.value.split("-");
+            paramsValue = [product[1], 1, parseFloat(pricerange[0]), parseFloat(pricerange[1])];
+            condition = "AND products.price BETWEEN ? AND ?;";
+        }else if(params.filter === "sold"){
+            paramsValue = [product[1], 1];
+            condition = `ORDER BY products.sold ${params.value.toUpperCase()};`;
+        }else{
+            paramsValue = [product[1], 1];
+            condition = `ORDER BY products.price ${params.value.toUpperCase()};`;
+        }
+    }else{
+        queryString = "SELECT * FROM products WHERE archive <> ? ";
+        if(params.filterby === "pricerange"){
+            const pricerange = params.value.split("-");
+            paramsValue = [1, parseFloat(pricerange[0]), parseFloat(pricerange[1])];
+            condition = "AND price BETWEEN ? AND ?;";
+        }else if(params.filter === "sold"){
+            paramsValue = [1];
+            console.log("hehe")
+            condition = `ORDER BY sold ${params.value.toUpperCase()};`;
+        }else{
+            paramsValue = [1];
+            console.log("haha")
+            condition = `ORDER BY price ${params.value.toUpperCase()};`;
+        }
+    }
+ //   console.log(queryString+"--"+condition)
+    db.query(queryString+condition, paramsValue, (err, results) => {
+        if (err) {
+            console.log(err)
+            result(err, null)
+        } else {
+            result(null, results)
+        }
+    })
+}
 export const addStocks = (stocks, id, result) => {
     db.query("UPDATE products SET stocks = ? WHERE id = ?;", [stocks, id], (err, results) => {
         if (err) {

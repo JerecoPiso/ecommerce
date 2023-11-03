@@ -3,7 +3,7 @@ import express from "express";
 // import function from controller
 //import { showProducts, showProductById, createProduct, updateProduct, deleteProduct } from "../controllers/Product.js";
 import { createUser, loginUser, checkIfAuth, logout, showUnVerifiedUsers, showVerifiedUsers, addToCart, getCartByUser } from "../controllers/Users.js";
-import { showProductsToDataTable,
+import { showProductsToDataTable, filterProducts,
     createProduct, showProducts, archiveProduct, archiveCategory, archiveBrand, showRecentProducts, showBrands, addStock,
     createCategory, createBrand, showCategory, showProductById, showProductByCategory,
     showProductByBrand, showPopularProduct, showSuggestedProductByCategory, showSuggestedProductByBrand, showOutOfStocks, updateBrand, updateCategory
@@ -17,6 +17,7 @@ router.post("/admin/createCategory", createCategory);
 router.post("/admin/createBrand", createBrand);
 router.post("/addToCart", addToCart);
 router.post("/getCartByUser", addToCart);
+router.post("/filterProducts", filterProducts);
 router.post("/logout", logout);
 
 // Read

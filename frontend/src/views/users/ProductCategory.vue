@@ -1,6 +1,6 @@
 <template>
     <p class="p-labels mt-1">Category: <span class="searched"> {{$route.params.category}}</span> </p>
-    <FiltersProduct style="margin-top: 1.5em;" @filter="FilterProducts"></FiltersProduct>
+    <FiltersProduct style="margin-top: 1em;" @filter="FilterProducts"></FiltersProduct>
     <div class="row">
         <ProductCard v-for="product in products" :product-id="product.id" :source="'/images/'+product.img_name" :key="product.id" :product-name="product.product_name" :price="product.price.toLocaleString('en-US')" :sold="product.sold.toString()"></ProductCard>   
     </div>

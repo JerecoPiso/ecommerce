@@ -1,7 +1,10 @@
 <template>
- <div class="product-with-label">
+    <div class="product-with-label">
         <p class="p-labels mt-4 mb-2">Products</p>
-        <FiltersProducts @filter="FilterProducts"></FiltersProducts>
+        <FiltersProducts @filter="FilterProducts" :min="min" :max="max"></FiltersProducts>
+        <p v-if="products.length < 1" class="no-result">No result found</p>
+        <p v-if="products.length < 1" class="text-center font-family">We're sorry. We cannot find any matches for your search
+            term.</p>
         <div class="row clear">
             <div class="row">
                 <ProductCard v-for="product in products" :product-id="product.id" :source="'/images/' + product.img_name"
@@ -15,45 +18,57 @@
 import axios from 'axios';
 import FiltersProducts from "@/components/FiltersProduct.vue";
 import ProductCard from '@/components/ProductCard.vue';
-export default{
+export default {
     name: "FilterProducts",
-    components:{
+    components: {
         FiltersProducts,
         ProductCard
     },
-    data(){
-        return{
+    data() {
+        return {
             products: [],
-            url: ''
+            url: '',
+            min: '',
+            max: ''
         }
     },
-    created(){
-        document.title = "Techworld | Products"
-        this.GetProducts()
-        this.url = axios.defaults.baseURL
-        // this.$watch(
-        //         () => this.$route.params,
-        //         () => {
-        //             this.FilterProducts(this.$route.params.product)
-        //         }
-        // )
+    created() {
+        if(this.$route.params.filterby == "pricerange"){
+            const minMax = this.$route.params.value.split("-")
+            this.min = minMax[0];
+            this.max = minMax[1]
+        }
+ 
+        document.title = "Techworld | Products";
+        this.url = axios.defaults.baseURL;
+        this.GetProducts();
+        this.$watch(
+            () => this.$route.params,
+            () => {
+                if(this.$route.name === "FilterProducts"){
+                    this.GetProducts()
+                }
+            }
+        )
     },
-    methods:{
+    methods: {
         async GetProducts() {
             try {
-                const response = await axios.get(this.url + "admin/showProducts");
+                let data = new FormData();
+                data.append("product", this.$route.params.product);
+                data.append("filterby", this.$route.params.filterby);
+                data.append("value", this.$route.params.value);
+                const response = await axios.post(this.url + "filterProducts", data);
                 this.products = response.data;
             } catch (err) {
                 console.log(err)
             }
         },
         FilterProducts(filterBy, value) {
-           // alert(filterBy+"--"+value)
-            this.$router.push(`/products/brand_${this.$route.params.product}/${filterBy}/${value}`)
+            this.$router.push(`/products/${this.$route.params.product}/${filterBy}/${value}`)
         }
     }
 }
-
 </script>
 <style scoped src="@/assets/css/users/allproducts.css"></style>
 <style scoped src="@/assets/css/users/index.css"></style>

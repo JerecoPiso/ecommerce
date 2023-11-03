@@ -1,6 +1,6 @@
 <template>
     <p class="p-labels mt-1">Brand: <span class="searched"> {{$route.params.brand}}</span> </p>
-    <FiltersProduct style="margin-top: 1.5em;" @filter="FilterProducts"></FiltersProduct>
+    <FiltersProduct style="margin-top: 1em;" @filter="FilterProducts"></FiltersProduct>
     <div class="row">
         <ProductCard v-for="brand in brands" :product-id="brand.id" :source="'/images/'+brand.img_name" :key="brand.id" :product-name="brand.product_name" :price="brand.price.toLocaleString('en-US')" :sold="brand.sold.toString()"></ProductCard>
     </div>
@@ -56,6 +56,7 @@ export default{
             }
         },
         FilterProducts(filterBy, value) {
+           // console.log(filterBy+"--"+value)
             this.$router.push(`/products/brand_${this.$route.params.brand}/${filterBy}/${value}`)
         }
     }

@@ -23,9 +23,10 @@ export default {
     },
     created() {
         document.title = "Techworld | Products"
-        this.GetProducts()
+        this.GetFilteredProducts()
         this.url = axios.defaults.baseURL
     },
+  
     data() {
         return {
             products: [],
@@ -35,7 +36,7 @@ export default {
         }
     },
     methods: {
-        async GetProducts() {
+        async GetFilteredProducts() {
             try {
                 const response = await axios.get(this.url + "admin/showProducts");
                 this.products = response.data;

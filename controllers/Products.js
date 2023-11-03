@@ -2,11 +2,23 @@ import url from "url";
 import querystring from "querystring";
 // Import function from Product Model
 import {
+    filteredProducts,
     addStocks, getProductsForDataTable,
     getProducts, archiveProductById, archiveCategoryById, getOutOfStocks, archiveBrandById,
     getRecentProducts, getCategory, getBrands, getProductById, getProductByCategory,
     getProductByBrand, getPopularProduct, getSuggestedProductByCategory, getSuggestedProductByBrand, insert, updateBrandById, updateCategoryById
 } from "../models/productsModel.js";
+
+export const filterProducts = (req, res) => {
+
+    filteredProducts(req.body, (err, results) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.json(results);
+        }
+    })
+}
 
 export const addStock = (req, res) => {
     addStocks(req.body.stocks, req.params.id, (err, results) => {
@@ -40,7 +52,6 @@ export const showProductsToDataTable = (req, res) => {
             let count = 0;
 
             results.forEach(el => {
-            
                 let dt = [];
                 dt.push(el.product_name)
                 dt.push(el.stocks)
