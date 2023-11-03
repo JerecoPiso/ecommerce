@@ -1,7 +1,6 @@
 import db from "../config/database.js";
 
 export const filteredProducts = (params, result) => {
-    // console.log(params)
     var queryString = "";
     var condition = "";
     var paramsValue = [];
@@ -41,15 +40,12 @@ export const filteredProducts = (params, result) => {
             condition = "AND price BETWEEN ? AND ?;";
         }else if(params.filter === "sold"){
             paramsValue = [1];
-            console.log("hehe")
             condition = `ORDER BY sold ${params.value.toUpperCase()};`;
         }else{
             paramsValue = [1];
-            console.log("haha")
             condition = `ORDER BY price ${params.value.toUpperCase()};`;
         }
     }
- //   console.log(queryString+"--"+condition)
     db.query(queryString+condition, paramsValue, (err, results) => {
         if (err) {
             console.log(err)
@@ -81,7 +77,6 @@ export const insert = (data, table, result) => {
     })
 }
 export const getProducts = (result) => {
-    // "SELECT * FROM products WHERE stocks > ? AND archive <> ? ORDER BY id DESC;"
     var sql = "SELECT p.id, p.product_name, p.price, p.stocks, p.description, p.img_name, p.sold, category.category, brand.brand FROM products AS p LEFT JOIN category ON p.category_id=category.id LEFT JOIN brand ON p.brand_id = brand.id WHERE p.stocks > ? AND p.archive <> ? ORDER BY p.id DESC;"
     db.query(sql, [0, 1], (err, results) => {
         if (err) {
@@ -103,6 +98,26 @@ export const getProductsForDataTable = (search, result) => {
         }
     });
 }
+export const getProductCategoryForDataTable = (search, result) => {
+    var sql = "SELECT * FROM category WHERE category LIKE ? AND archive <> ? ORDER BY id DESC;"
+    db.query(sql, ["%" + search + "%", 1], (err, results) => {
+        if (err) {
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });
+}
+export const getProductBrandForDataTable = (search, result) => {
+    var sql = "SELECT * FROM brand WHERE brand LIKE ? and archive <> ? ORDER BY id DESC;"
+    db.query(sql, ["%" + search + "%", 1], (err, results) => {
+        if (err) {
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });
+}
 export const getOutOfStocks = (result) => {
     db.query("SELECT * FROM products WHERE stocks = ? AND archive <> ? ORDER BY id DESC;", [0, 1], (err, results) => {
 
@@ -115,7 +130,7 @@ export const getOutOfStocks = (result) => {
     });
 }
 export const getPopularProduct = (result) => {
-    db.query("SELECT * FROM products WHERE archive <> ? ORDER BY sold DESC LIMIT 6;", [1], (err, results) => {
+    db.query("SELECT * FROM products WHERE archive <> ? AND sold <> ? ORDER BY sold DESC LIMIT 6;", [1, 0], (err, results) => {
         if (err) {
             console.log(err);
             result(err, null);

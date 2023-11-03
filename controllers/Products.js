@@ -2,6 +2,7 @@ import url from "url";
 import querystring from "querystring";
 // Import function from Product Model
 import {
+    getProductCategoryForDataTable, getProductBrandForDataTable,
     filteredProducts,
     addStocks, getProductsForDataTable,
     getProducts, archiveProductById, archiveCategoryById, getOutOfStocks, archiveBrandById,
@@ -38,12 +39,71 @@ export const showProducts = (req, res) => {
         }
     })
 }
+export const showProductBrandToDataTable = (req, res) => {
+    const parsedUrl = url.parse(req.url);
+    const queryParams = querystring.parse(parsedUrl.query);
+    const searchValue = queryParams['search[value]'];
+    const draw = queryParams['draw'];
+    getProductBrandForDataTable(searchValue, (err, results) => {
+        if (err) {
+            console.log(err)
+            res.send(err);
+        } else {
+            let datatable = [];
+            let count = 0;
+          //  console.log(results)
+            results.forEach(el => {
+                let dt = [];
+                dt.push(el.id)
+                dt.push(el.brand)
+                datatable.push(dt)
+                count++;
+            });
+            let json_data = {
+                "draw": draw,
+                "recordsTotal": count,
+                "recordsFiltered": count,
+                "data": datatable
+            }
+            res.json(json_data);
+        }
+    })
+}
+export const showProductCategoryToDataTable = (req, res) => {
+    const parsedUrl = url.parse(req.url);
+    const queryParams = querystring.parse(parsedUrl.query);
+    const searchValue = queryParams['search[value]'];
+    const draw = queryParams['draw'];
+    getProductCategoryForDataTable(searchValue, (err, results) => {
+        if (err) {
+            console.log(err)
+            res.send(err);
+        } else {
+            let datatable = [];
+            let count = 0;
+           // console.log(results)
+            results.forEach(el => {
+                let dt = [];
+                dt.push(el.id)
+                dt.push(el.category)
+                datatable.push(dt)
+                count++;
+            });
+            let json_data = {
+                "draw": draw,
+                "recordsTotal": count,
+                "recordsFiltered": count,
+                "data": datatable
+            }
+            res.json(json_data);
+        }
+    })
+}
 export const showProductsToDataTable = (req, res) => {
     const parsedUrl = url.parse(req.url);
     const queryParams = querystring.parse(parsedUrl.query);
     const searchValue = queryParams['search[value]'];
     const draw = queryParams['draw'];
-
     getProductsForDataTable(searchValue, (err, results) => {
         if (err) {
             res.send(err);

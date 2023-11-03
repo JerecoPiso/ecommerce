@@ -112,6 +112,7 @@ export default {
                 const outofstockprod = await axios.get(this.url + "admin/getoutofstock");
                 const verifiedCount = await axios.get(this.url + "admin/getverifiedusers")
                 const unverifiedCount = await axios.get(this.url + "admin/getunverifiedusers")
+                console.log(verifiedCount)
                 this.totalProducts = prod.data.length + outofstockprod.data.length;
                 this.totalCustomers = verifiedCount.data.length + unverifiedCount.data.length;
             } catch (err) {

@@ -2,7 +2,7 @@
 import db from "../config/database.js";
 
 export const addNewToCart = (data, result) =>{
-    db.query("INSERT INTO orders SET ?;", [data], (err, results) => {
+    db.query("INSERT INTO cart SET ?;", [data], (err, results) => {
         if (err) {
             result(err, null)
         } else {

@@ -1,4 +1,5 @@
 <template>
+  <button type="button" @click="hehe()">HAHA</button>
   <!-- The Modal -->
   <div class="modal" id="myModal">
     <div class="modal-dialog">
@@ -35,7 +36,6 @@
           </form>
         </div>
         <div class="modal-footer">
-          <!-- data-bs-dismiss="modal" -->
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
@@ -43,12 +43,10 @@
   </div>
   <p class="page-title">Dashboard | Products</p>
   <div class="table-products">
-    <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#myModal" class="add-btn"> <i
+    <button type="button" data-bs-toggle="modal" data-bs-target="#myModal" class="add-btn mb-2"> <i
         class="fa-solid fa-plus"></i> Add Product</button>
-
-    <input type="text" placeholder="Search . . ." name="" id="search-filter"> -->
-    <div class="tbl-max-height" style="padding-right: 10px;">
-      <DataTable ajax="http://localhost:5000/admin/showProductsToDataTable"  ref="table" class="display" :options="{
+    <div class="tbl-max-height4" style="padding-right: 10px;">
+      <DataTable ajax="http://localhost:5000/admin/showProductsToDataTable" ref="productstable" class="display" :options="{
         select: true,
         serverSide: true,
         processing: true,
@@ -64,41 +62,71 @@
           </tr>
         </thead>
       </DataTable>
-      <!-- <table class="table table-hover table-responsive table-bordered">
-        <thead>
-          <tr>
-            <th>Image </th>
-            <th>Product Name</th>
-            <th>Stocks</th>
-            <th>Category</th>
-            <th>Brand</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="product, index in products" :key="product.id">
-            <td><img :src="'/images/' + product.img_name" class="tbl-product-img"></td>
-            <td>{{ product.product_name }}</td>
-            <td>{{ product.stocks }}</td>
-            <td>{{ product.category }}</td>
-            <td>{{ product.brand }}</td>
-            <td class="action-max-width">
-              <button class="action-btn btn-add mt-2" @click="addStock(product.id, product.stocks)"><i
-                  class="fa-solid fa-plus"></i> </button> &ThinSpace;
-              <button class="action-btn btn-edit"><i class="fa-solid fa-pen-to-square"></i> </button> &ThinSpace;
-              <button class="action-btn btn-archive" @click="archiveProduct(product.id, index, 1)"><i
-                  class="fa-solid fa-trash"></i> </button>
-            </td>
-          </tr>
-        </tbody>
-      </table> -->
     </div>
-    <!-- <TablePagination :current-page="currentPage" :total-page="totalPage" @next="nextPage()" @prev="prevPage()">
-    </TablePagination> -->
   </div>
-  <!-- .table-products -->
   <div class="row">
-    <div class="col-xl-4 col-lg-4">
+    <div class="col-xl-6 col-lg-6">
+      <div class="tables">
+        <p class="table-title">Product Category</p>
+        <div class="d-flex flex-row-reverse">
+          <button type="button" class="action-btn btn-archive " @click="archiveCategory()"><i
+              class="fa-solid fa-trash"></i>
+          </button> &ThinSpace;
+          <button type="button" class="action-btn btn-edit" @click="updateCategory()"><i
+              class="fa-solid fa-pen-to-square"></i>
+          </button> &ThinSpace;
+          <button type="button" class="action-btn  btn-add" @click="addCategory()"> <i
+              class="fa-solid fa-plus"></i></button>
+        </div>
+        <div class="tbl-max-height">
+          <DataTable ajax="http://localhost:5000/admin/showProductCategoryToDataTable" ref="category" class="display"
+            :options="{
+              select: true,
+              serverSide: true,
+              processing: true,
+              searching: true,
+              stateSave: true
+            }">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Category</th>
+              </tr>
+            </thead>
+          </DataTable>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-6 col-lg-6">
+      <div class="tables">
+        <p class="table-title">Product Brand</p>
+        <div class="d-flex flex-row-reverse">
+          <button type="button" class="action-btn btn-archive " @click="archiveBrand()"><i class="fa-solid fa-trash"></i>
+          </button> &ThinSpace;
+          <button type="button" class="action-btn btn-edit" @click="updateBrand()"><i
+              class="fa-solid fa-pen-to-square"></i>
+          </button> &ThinSpace;
+          <button type="button" class="action-btn  btn-add" @click="addBrand()"> <i class="fa-solid fa-plus"></i></button>
+        </div>
+        <div class="tbl-max-height">
+          <DataTable ajax="http://localhost:5000/admin/showProductBrandToDataTable" ref="brand" class="display" :options="{
+            select: true,
+            serverSide: true,
+            processing: true,
+            searching: true,
+            stateSave: true
+          }">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Category</th>
+              </tr>
+            </thead>
+          </DataTable>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-6 col-lg-6">
       <div class="tables">
         <p class="table-title">Out of Stock Products</p>
         <div class="tbl-max-height">
@@ -113,74 +141,9 @@
         </div>
       </div>
     </div>
-    <div class="col-xl-4 col-lg-4">
-      <div class="tables">
-        <p class="table-title">Product Category <button type="button" class="btn-add-category" @click="addCategory()"> <i
-              class="fa-solid fa-plus"></i></button> </p>
-        <div class="tbl-max-height ">
-          <table class="table table-hover table-bordered">
-            <tbody>
-              <tr v-for="c, index in category" :key="c.id">
-                <td>{{ c.category }}</td>
-                <td class="action-td">
-                  <button class="action-btn btn-edit" @click="updateCategory(c.id, c.category, index)"><i
-                      class="fa-solid fa-pen-to-square"></i> </button> &ThinSpace;
-                  <button class="action-btn btn-archive " @click="archiveCategory(c.id, index)"><i
-                      class="fa-solid fa-trash"></i> </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-4 col-lg-4">
-      <div class="tables">
-        <p class="table-title">Product Brand <button type="button" class="btn-add-brand" @click="addBrand()"> <i
-              class="fa-solid fa-plus"></i> </button></p>
-        <div class="tbl-max-height">
-          <table class="table table-hover table-bordered">
-            <tbody>
-              <tr v-for="b, index in brands" :key="b.id">
-                <td class="brand-category">{{ b.brand }}</td>
-                <td class="action-td" >
-                  <button class="action-btn btn-edit" @click="updateBrand(b.id, b.brand, index)"><i
-                      class="fa-solid fa-pen-to-square"></i> </button> &ThinSpace;
-                  <button class="action-btn btn-archive " @click="archiveBrand(b.id, index)"><i
-                      class="fa-solid fa-trash"></i> </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <!-- <div class="col-xl-12">
-      <div class="tables p-4">
-        <DataTable ajax="http://localhost:5000/admin/showProductsToDataTable" ref="table" class="display" :options="{
-          select: true,
-          serverSide: true,
-          processing: true,
-          searching: true,
-          stateSave: true
-        }">
-          <thead>
-            <tr>
-              <th>Product Name</th>
-              <th>Stocks</th>
-              <th>Category</th>
-              <th>Brand</th>
-            </tr>
-          </thead>
-        </DataTable>
-      </div>
-
-    </div> -->
   </div>
 </template>
 <script>
-
-// import TablePagination from '@/components/TablePagination.vue';
 import axios from 'axios';
 import DataTable from 'datatables.net-vue3';
 import 'datatables.net-select';
@@ -188,12 +151,10 @@ import 'datatables.net-responsive';
 import DataTablesCore from 'datatables.net';
 import Swal from 'sweetalert2';
 DataTable.use(DataTablesCore);
-
 export default {
   name: "OurProducts",
   components: {
-    DataTable,
-    // TablePagination
+    DataTable
   },
   data() {
     return {
@@ -210,47 +171,21 @@ export default {
       products: [],
       category: [],
       brands: [],
-      outofstock: [],
-      currentPage: 1,
-      totalPage: 8,
-      datas: [
-        [1, 2],
-        [3, 4],
-        [1, 2],
-        [3, 4],
-        [1, 2],
-        [3, 4],
-        [1, 2],
-        [3, 4],
-        [1, 2],
-        [3, 4],
-        [1, 2],
-        [3, 4],
-        [1, 2],
-        [3, 4],
-        [1, 2],
-        [3, 4],
-        [1, 2],
-        [3, 4],
-        [1, 2],
-        [3, 4],
-        [1, 2],
-        [3, 4],
-        [1, 2],
-        [3, 4],
-        [1, 2],
-        [3, 4],
-      ]
+      outofstock: []
     }
   },
   created() {
     this.getCategory()
-    this.getProducts()
+    //this.getProducts()
     this.getBrands()
     this.getoutofstock()
     this.url = axios.defaults.baseURL
   },
   methods: {
+    hehe(){
+      var modal = document.getElementById("myModal")
+      console.log(modal)
+    },
     async addStock(id, stocks) {
       const { value: stock } = await Swal.fire({
         title: 'Enter Stock',
@@ -296,7 +231,8 @@ export default {
             icon: response.data.responseType,
             confirmButtonText: 'OK'
           })
-          this.getCategory()
+          this.$refs.category.dt.ajax.reload(null, false)
+          //this.getCategory()
         }).catch(err => {
           console.log(err)
         })
@@ -323,7 +259,8 @@ export default {
             icon: response.data.responseType,
             confirmButtonText: 'OK'
           })
-          this.getBrands()
+          this.$refs.brand.dt.ajax.reload(null, false)
+          // console.log()
         }).catch(err => {
           console.log(err)
         })
@@ -347,9 +284,8 @@ export default {
         this.$refs.photo.value = null;
         this.productInfo.stocks = 0
         this.productInfo.price = 0
-        this.productInfo.description = null
-        this.getProducts()
-        console.log(response.data)
+        this.productInfo.description = null;
+        this.$refs.productstable.dt.ajax.reload(null, false);
       }).catch(err => {
         console.log(err)
       })
@@ -381,11 +317,9 @@ export default {
         }
       })
     },
-
-    archiveCategory(id, index) {
-      console.log(id)
+    archiveCategory() {
       Swal.fire({
-        title: 'Are you sure to archive this category?',
+        title: 'Are you sure to archive the selected category?',
         text: '',
         icon: 'warning',
         showCancelButton: true,
@@ -394,22 +328,30 @@ export default {
         confirmButtonText: 'Yes, Archive'
       }).then((result) => {
         if (result.isConfirmed) {
-          axios.put(`${this.url}admin/archiveCategory/${id}`).then(response => {
-            if (response.statusText == "OK") {
-              this.category.splice(index, 1)
-              Swal.fire('Removed!', 'Category has been archived.', 'success')
-            }
-          }
-          ).catch(err => {
-            console.log(err)
-          })
+          const rowTotal = this.$refs.category.dt.rows({ selected: true }).data().length;
+          let rowCtr = 0;
+          this.$refs.category.dt.rows({ selected: true }).every(el => {
+            rowCtr++;
+            (async () => {
+              await axios.put(`${this.url}admin/archiveCategory/${this.$refs.category.dt.rows(el).data()[0][0]}`).then(response => {
+                if (response.statusText == "OK") {
+                  this.$refs.category.dt.ajax.reload(null, false)
+                  if (rowCtr == rowTotal) {
+                    Swal.fire('Removed!', 'Brand has been archived.', 'success')
+                  }
+                }
+              }
+              ).catch(err => {
+                console.log(err)
+              })
+            })()
+          });
         }
       })
     },
-    archiveBrand(id, index) {
-      // console.log(id)
+    archiveBrand() {
       Swal.fire({
-        title: 'Are you sure to archive this brand?',
+        title: 'Are you sure to archive the selected brand/s?',
         text: '',
         icon: 'warning',
         showCancelButton: true,
@@ -418,15 +360,24 @@ export default {
         confirmButtonText: 'Yes, Archive'
       }).then((result) => {
         if (result.isConfirmed) {
-          axios.put(`${this.url}admin/archiveBrand/${id}`).then(response => {
-            if (response.statusText == "OK") {
-              this.brands.splice(index, 1)
-              Swal.fire('Removed!', 'Brand has been archived.', 'success')
-            }
-          }
-          ).catch(err => {
-            console.log(err)
-          })
+          const rowTotal = this.$refs.brand.dt.rows({ selected: true }).data().length;
+          let rowCtr = 0;
+          this.$refs.brand.dt.rows({ selected: true }).every(el => {
+            rowCtr++;
+            (async () => {
+              await axios.put(`${this.url}admin/archiveBrand/${this.$refs.brand.dt.rows(el).data()[0][0]}`).then(response => {
+                if (response.statusText == "OK") {
+                  this.$refs.brand.dt.ajax.reload(null, false)
+                  if (rowCtr == rowTotal) {
+                    Swal.fire('Removed!', 'Brand has been archived.', 'success')
+                  }
+                }
+              }
+              ).catch(err => {
+                console.log(err)
+              })
+            })()
+          });
         }
       })
     },
@@ -466,70 +417,127 @@ export default {
         console.log(err)
       }
     },
-    async updateBrand(id, value, index) {
-      const { value: newbrand } = await Swal.fire({
-        title: 'Enter Brand',
-        input: 'text',
-        inputValue: value,
-        showCancelButton: true,
-        inputValidator: (value) => {
-          if (!value) {
-            return 'Please write something!'
-          }
-        }
-      })
-      if (newbrand) {
-        let data = new FormData()
-        data.append("brand", newbrand)
-        await axios.put(`${this.url}admin/updateBrand/${id}`, data).then(response => {
-          Swal.fire({ text: response.data.message, icon: response.data.responseType, confirmButtonText: 'OK' })
-          this.brands[index].brand = newbrand;
-        }).catch(err => {
-          console.log(err)
-        })
+    async updateBrand() {
+      const selectedChecker = this.$refs.brand.dt.rows({ selected: true }).data().length;
+      if (selectedChecker == 0) {
+        Swal.fire("", "Please select brand to update", "warning")
+      } else if (selectedChecker > 1) {
+        Swal.fire("", "Please select only 1 brand to update", "warning")
+      } else {
+        this.$refs.brand.dt.rows({ selected: true }).every(el => {
+          (async () => {
+            const { value: newbrand } = await Swal.fire({
+              title: 'Enter Brand',
+              input: 'text',
+              inputValue: this.$refs.brand.dt.rows(el).data()[0][1],
+              showCancelButton: true,
+              inputValidator: (value) => {
+                if (!value) {
+                  return 'Please write something!'
+                }
+              }
+            })
+            if (newbrand) {
+              let data = new FormData()
+              data.append("brand", newbrand)
+              await axios.put(`${this.url}admin/updateBrand/${this.$refs.brand.dt.rows(el).data()[0][0]}`, data).then(response => {
+                Swal.fire({ text: response.data.message, icon: response.data.responseType, confirmButtonText: 'OK' })
+                this.$refs.brand.dt.ajax.reload(null, false)
+              }).catch(err => {
+                console.log(err)
+              })
+            }
+          })()
+
+        });
+
       }
+      // const { value: newbrand } = await Swal.fire({
+      //   title: 'Enter Brand',
+      //   input: 'text',
+      //   inputValue: value,
+      //   showCancelButton: true,
+      //   inputValidator: (value) => {
+      //     if (!value) {
+      //       return 'Please write something!'
+      //     }
+      //   }
+      // })
+      // if (newbrand) {
+      //   let data = new FormData()
+      //   data.append("brand", newbrand)
+      //   await axios.put(`${this.url}admin/updateBrand/${id}`, data).then(response => {
+      //     Swal.fire({ text: response.data.message, icon: response.data.responseType, confirmButtonText: 'OK' })
+      //     this.brands[index].brand = newbrand;
+      //   }).catch(err => {
+      //     console.log(err)
+      //   })
+      // }
     },
-    async updateCategory(id, value, index) {
-      console.log(id + value)
-      const { value: newcategory } = await Swal.fire({
-        title: 'Enter Category',
-        input: 'text',
-        inputValue: value,
-        showCancelButton: true,
-        inputValidator: (value) => {
-          if (!value) {
-            return 'Please write something!'
-          }
-        }
-      })
-      if (newcategory) {
-        let data = new FormData()
-        data.append("category", newcategory)
-        await axios.put(`${this.url}admin/updateCategory/${id}`, data).then(response => {
-          Swal.fire({ text: response.data.message, icon: response.data.responseType, confirmButtonText: 'OK' })
-          this.category[index].category = newcategory;
-        }).catch(err => {
-          console.log(err)
-        })
+    async updateCategory() {
+      const selectedChecker = this.$refs.category.dt.rows({ selected: true }).data().length;
+      if (selectedChecker == 0) {
+        Swal.fire("", "Please select category to update", "warning")
+      } else if (selectedChecker > 1) {
+        Swal.fire("", "Please select only 1 category to update", "warning")
+      } else {
+        this.$refs.category.dt.rows({ selected: true }).every(el => {
+          (async () => {
+            const { value: newcategory } = await Swal.fire({
+              title: 'Enter Category',
+              input: 'text',
+              inputValue: this.$refs.category.dt.rows(el).data()[0][1],
+              showCancelButton: true,
+              inputValidator: (value) => {
+                if (!value) {
+                  return 'Please write something!'
+                }
+              }
+            })
+            if (newcategory) {
+              let data = new FormData()
+              data.append("category", newcategory)
+              await axios.put(`${this.url}admin/updateCategory/${this.$refs.category.dt.rows(el).data()[0][0]}`, data).then(response => {
+                Swal.fire({ text: response.data.message, icon: response.data.responseType, confirmButtonText: 'OK' })
+
+              }).catch(err => {
+                console.log(err)
+              })
+            }
+          })()
+
+        });
+
       }
+      // const { value: newcategory } = await Swal.fire({
+      //   title: 'Enter Category',
+      //   input: 'text',
+      //   inputValue: value,
+      //   showCancelButton: true,
+      //   inputValidator: (value) => {
+      //     if (!value) {
+      //       return 'Please write something!'
+      //     }
+      //   }
+      // })
+      // if (newcategory) {
+      //   let data = new FormData()
+      //   data.append("category", newcategory)
+      //   await axios.put(`${this.url}admin/updateCategory/${id}`, data).then(response => {
+      //     Swal.fire({ text: response.data.message, icon: response.data.responseType, confirmButtonText: 'OK' })
+      //     this.category[index].category = newcategory;
+      //   }).catch(err => {
+      //     console.log(err)
+      //   })
+      // }
     },
     changePhoto() {
       this.productInfo.photo = this.$refs.photo.files[0]
     },
-    nextPage() {
-      if (this.currentPage < this.totalPage) {
-        this.currentPage++;
-      }
-    },
-    prevPage() {
-      if (this.currentPage > 1) {
-        this.currentPage--;
-      }
-    }
   }
 }
 </script>
 <style scoped>
-@import 'datatables.net-dt'
+@import 'datatables.net-dt';
 </style>
 <style scoped src="@/assets/css/admin/index.css"></style>

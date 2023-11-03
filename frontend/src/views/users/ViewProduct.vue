@@ -116,6 +116,7 @@ export default {
                     data.append("quantity", this.quantity);
                     data.append("user_id", this.userId.id)
                     await axios.post(this.url + "addToCart", data).then(response => {
+                        console.log(response.data)
                         if (response.statusText === "OK") {
                             Swal.fire({
                                 icon: 'success',
